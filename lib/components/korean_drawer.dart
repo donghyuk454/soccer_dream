@@ -2,8 +2,8 @@ import 'package:dream/components/player_toggle.dart';
 import 'package:flutter/material.dart';
 
 class KoreanDrawer extends StatefulWidget {
-  List<String> koreanList = ["손흥민", "황희찬", "이강인", "김민재",];
-  List<bool> koreanActiveList = [true, true, false, false,];
+  final List<String> koreanList = ["손흥민", "황희찬", "이강인", "김민재",];
+  final List<bool> koreanActiveList = [true, true, false, false,];
 
   KoreanDrawer({super.key});
 
@@ -36,7 +36,8 @@ class _KoreanDrawerState extends State<KoreanDrawer> {
       child: Column (
         children: [
           Container(
-            margin: EdgeInsets.fromLTRB(3, 10, 0, 15),
+            margin: EdgeInsets.fromLTRB(10, 10, 0, 10),
+            alignment: Alignment.centerLeft,
             child: Text("구독할 한국 선수"),
           ),
           Divider(thickness: 2,),
