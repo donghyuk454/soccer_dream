@@ -10,21 +10,27 @@ class PlayerToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(3, 10, 0, 10),
-      child: Row(
-        children: [
-          Flexible(flex: 3, child: Text(playerName)),
-          Flexible(
-              flex: 5,
+      margin: EdgeInsets.fromLTRB(20, 10, 0, 0),
+      child: Align(
+        alignment: Alignment.center,
+        child: Row(
+          children: [
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Text(playerName),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
               child: Switch(
                 value: isChecked,
                 onChanged: (value) {
                   onChanged!(value);
                 },
-              )
-          )
-        ],
-      ),
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }
