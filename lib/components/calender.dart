@@ -1,3 +1,4 @@
+import 'package:dream/data/model/match.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -6,7 +7,7 @@ class SoccerCalendar extends StatefulWidget {
   DateTime? selectedDay;
   DateTime focusedDay = DateTime.now();
   void Function(DateTime, DateTime)? onDaySelected;
-  List<dynamic> Function(DateTime)? matchEventLoader;
+  List<MatchDto> Function(DateTime)? matchEventLoader;
 
   SoccerCalendar({super.key, this.selectedDay, required this.focusedDay, this.onDaySelected, required this.matchEventLoader}) : super();
 
@@ -15,11 +16,10 @@ class SoccerCalendar extends StatefulWidget {
 }
 
 class _SoccerCalendarState extends State<SoccerCalendar> {
-
   @override
   Widget build(BuildContext context) {
 
-    return TableCalendar(
+    return TableCalendar<MatchDto>(
       focusedDay: widget.focusedDay,
       firstDay: DateTime(1800),
       lastDay: DateTime(3000),
@@ -38,6 +38,21 @@ class _SoccerCalendarState extends State<SoccerCalendar> {
             date.day == widget.selectedDay!.day;
       },
       eventLoader: widget.matchEventLoader,
+      calendarBuilders: CalendarBuilders(
+        singleMarkerBuilder: (context, datetime, match) {
+          return Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: match.color,
+              ),
+              height: 10,
+              width: 10,
+            ),
+          );
+        }
+      ),
     );
   }
 }
