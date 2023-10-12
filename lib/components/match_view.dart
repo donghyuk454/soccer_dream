@@ -1,12 +1,13 @@
 import 'package:dream/screens/match_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../data/model/match.dart';
+
 class MatchView extends StatelessWidget {
 
-  final String title;
-  final String time;
+  final MatchDto match;
 
-  MatchView(this.title, this.time, {super.key});
+  MatchView(this.match, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +27,8 @@ class MatchView extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(title),
-            Text(time),
+            Text(match.title),
+            Text(match.time),
           ],
         ),
       ),
@@ -37,7 +38,7 @@ class MatchView extends StatelessWidget {
   void _navigateToNewScreen(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MatchScreen()),
+      MaterialPageRoute(builder: (context) => MatchScreen(match: match,)),
     );
   }
 }
