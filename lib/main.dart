@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Map<DateTime, List<MatchDto>> matches = {};
     matches.addAll({
-      DateTime.utc(2023, 10, 23): [MatchDto("토트넘 vs 리버풀", "2023-10-23", Colors.blue), MatchDto("울버햄튼 vs 아스날", "2023-10-23", Colors.yellow), MatchDto("마인츠 vs 바이에른뮌헨", "2023-10-23", Colors.red)],
-      DateTime.utc(2023, 10, 24): [MatchDto("셀틱FC vs 어쩌구", "2023-10-24", Colors.green)],
+      DateTime.utc(2023, 10, 23): [MatchDto("토트넘 vs 리버풀", "2023-10-23", Colors.blue, "토트넘", "리버풀", DateTime.utc(2023, 10, 23)), MatchDto("울버햄튼 vs 아스날", "2023-10-23", Colors.yellow, "울버햄튼", "아스날", DateTime.utc(2023, 10, 23)), MatchDto("마인츠 vs 바이에른뮌헨", "2023-10-23", Colors.red, "마인츠", "바이에른뮌헨", DateTime.utc(2023, 10, 23))],
+      DateTime.utc(2023, 10, 24): [MatchDto("셀틱FC vs 어쩌구", "2023-10-24", Colors.green, "셀틱FC", "어쩌구", DateTime.utc(2023, 10, 24))],
     });
 
     return MaterialApp(

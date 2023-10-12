@@ -1,9 +1,11 @@
+import 'package:dream/data/model/match.dart';
 import 'package:flutter/material.dart';
 
 import 'match_screen_body.dart';
 
 class MatchScreen extends StatelessWidget {
-  const MatchScreen({super.key});
+  final MatchDto match;
+  MatchScreen({super.key, required this.match});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class MatchScreen extends StatelessWidget {
           },
         ),
       ),
-      body: MatchScreenBody(),
+      body: MatchScreenBody(match: match,),
       bottomNavigationBar: BottomAppBar(),
     );
   }

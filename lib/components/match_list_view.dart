@@ -18,7 +18,7 @@ class _MatchListViewState extends State<MatchListView> {
     var result = Column(children: [],);
 
     for (var match in widget.matches) {
-      result.children.add(MatchView(match.getTitle(), match.getTime()));
+      result.children.add(MatchView(match));
     }
 
     return result;
