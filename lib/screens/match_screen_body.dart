@@ -12,52 +12,64 @@ class MatchScreenBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    var lineUp = Flex(
-      direction: Axis.vertical,
-      children: [
-        Container(
-            margin: EdgeInsets.fromLTRB(100, 0, 100, 100),
-            alignment: Alignment.topCenter,
-            child: CustomPaint(
-              size: Size(300,300),
-              painter: LineupPainter(),
-              child: Image.asset('assets/images/field.jpg'),
-            )
-        ),
-      ]
-       );
+    var lineUp = SingleChildScrollView(
+      scrollDirection: Axis.vertical,
+      child: Column(
+        children: [
+          Container(
+              margin: EdgeInsets.all(10),
+              alignment: Alignment.topCenter,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/field.jpg'),
+                    // fit: BoxFit.fill
+                  )
+              ),
+              child: CustomPaint(
+                size: Size(400,400),
+                painter: LineupPainter(),
+              )
+          ),
+        ],
+      )
+
+    );
 
     return Column(
       children: [
-        Container(
-          margin: EdgeInsets.all(15),
-          child: Text("프리미어리그"),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        Column(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text("home", style: TextStyle(fontSize: 15,),),
-                Text(match.home, style: TextStyle(fontSize: 35,),),
-              ],
-            ),
             Container(
-              margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-              child: Text("vs", style: TextStyle(fontSize: 35),),
+              margin: EdgeInsets.all(15),
+              child: Text("Premier League"),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text("away", style: TextStyle(fontSize: 15,),),
-                Text(match.away, style: TextStyle(fontSize: 35),)
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text("home", style: TextStyle(fontSize: 15,),),
+                    Text(match.home, style: TextStyle(fontSize: 35,),),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  child: Text("vs", style: TextStyle(fontSize: 35),),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text("away", style: TextStyle(fontSize: 15,),),
+                    Text(match.away, style: TextStyle(fontSize: 35),)
+                  ],
+                )
               ],
-            )
+            ),
           ],
         ),
         Divider(),
-        Flex(direction: Axis.vertical, children: [lineUp],)
+        lineUp
       ],
     );
   }
