@@ -4,6 +4,7 @@ import 'package:dream/data/model/match.dart';
 import 'package:flutter/material.dart';
 
 import 'package:dream/components/calender.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   Map<DateTime, List<MatchDto>>? matches;
@@ -22,9 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    MatchListView matchListView = MatchListView(matches: nowMatches);
-
     return SafeArea(
       child: Scaffold(
           body: Column(children: [
@@ -38,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 16.0,
             ),
             ScheduleBanner(scheduleCount: 0, selectedDay: selectedDay,),
-            matchListView,
+            // matchListView,
           ])
       ),
     );
@@ -50,6 +48,37 @@ class _HomeScreenState extends State<HomeScreen> {
       this.focusedDay = selectedDay;
       nowMatches = _getMatchesForDay(selectedDay);
     });
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(0), // Remove default padding
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0), // Custom border shape
+          ),
+          title: Text(DateFormat('MM월 dd일').format(selectedDay)),
+          content: SizedBox(
+            width: 400,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                MatchListView(matches: nowMatches),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  margin: EdgeInsets.all(20),
+                  child: TextButton(
+                    child: Text('닫기'),
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Dialog를 닫습니다.
+                    },
+                  ),
+                )
+              ],
+            ),
+          )
+        );
+      },
+    );
   }
 
   List<MatchDto> _getMatchesForDay(DateTime day) {
