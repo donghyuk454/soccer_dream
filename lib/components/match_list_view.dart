@@ -15,12 +15,20 @@ class _MatchListViewState extends State<MatchListView> {
 
   @override
   Widget build(BuildContext context) {
-    var result = Column(children: [],);
+    List<MatchView> components = [];
 
     for (var match in widget.matches) {
-      result.children.add(MatchView(match));
+      components.add(MatchView(match));
     }
 
-    return result;
+    return SizedBox(
+      height: 350,
+      child: ListView.builder(
+        itemCount: components.length,
+        itemBuilder: (BuildContext context, int index) {
+          return components[index];
+        },
+      ),
+    );
   }
 }
