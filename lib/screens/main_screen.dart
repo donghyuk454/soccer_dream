@@ -25,7 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(children: [
+        body: Column(
+          children: [
             SoccerCalendar(
               onDaySelected: onDaySelected,
               focusedDay: focusedDay,
@@ -36,8 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 16.0,
             ),
             ScheduleBanner(scheduleCount: 0, selectedDay: selectedDay,),
-            // matchListView,
-          ])
+          ]
+        )
       ),
     );
   }
