@@ -45,7 +45,7 @@ class _KoreanDrawerState extends State<KoreanDrawer> {
             ),
             Divider(thickness: 2,),
             Flexible(
-                child: koreanListView
+              child: koreanListView
             ),
             Container(
               alignment: Alignment.bottomRight,

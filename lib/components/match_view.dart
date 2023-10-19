@@ -13,7 +13,7 @@ class MatchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _navigateToNewScreen(context); // 화면 전환 함수 호출
+        navigateToNewScreen(context); // 화면 전환 함수 호출
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class MatchView extends StatelessWidget {
     );
   }
 
-  void _navigateToNewScreen(BuildContext context) {
+  void navigateToNewScreen(BuildContext context) {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => MatchScreen(match: match,)),
