@@ -1,6 +1,8 @@
 import 'package:dream/components/form_component.dart';
 import 'package:flutter/material.dart';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 class NameScreen extends StatefulWidget {
   NameScreen({super.key});
 
@@ -60,5 +62,34 @@ class _NameScreenState extends State<NameScreen> {
       )
     );
   }
-  
+
+  checkIsValidThenCreateUser(){
+    print(name);
+    print(email);
+    // createUser();
+    if (_formKey.currentState?.validate() ?? false) {
+      // 유효성 검사 통과 시 여기에 추가 로직을 넣을 수 있습니다.
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('처리 중입니다.')),
+      );
+    } else {
+      String message = email.isEmpty ? "이메일을 입력해주세요" : "닉네임을 입력해주세요";
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message)),
+      );
+    }
+  }
+
+  createUser() async {
+    // 계정 생성 api 호출
+    int userId = 1;
+
+    // 계정 Local 저장
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt("id", userId);
+    prefs.setString("email", email);
+    prefs.setString("name", name);
+
+    // 화면 전환
+  }
 }
