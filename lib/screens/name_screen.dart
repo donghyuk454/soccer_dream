@@ -1,48 +1,50 @@
+import 'package:dream/components/form_component.dart';
 import 'package:flutter/material.dart';
 
 class NameScreen extends StatefulWidget {
-  String? name;
-
-  NameScreen({super.key, this.name});
+  NameScreen({super.key});
 
   @override
   State<NameScreen> createState() => _NameScreenState();
 }
 
 class _NameScreenState extends State<NameScreen> {
+  final _formKey = GlobalKey<FormState>();
+
+  String email = "";
+  String name = "";
+
   @override
   Widget build(BuildContext context) {
     var button = Container(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 30),
       alignment: Alignment.bottomRight,
-      child: ElevatedButton(onPressed: (){}, child: const Text("다음")),
+      child: ElevatedButton(
+        onPressed: () => checkIsValidThenCreateUser(),
+        child: const Text("다음")
+      ),
     );
 
-    var nickName = Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.fromLTRB(0, 0, 0, 15),
-          child: const Text(
-            "닉네임을 입력해주세요.",
-            style: TextStyle(
-              fontSize: 20,
-              fontStyle: FontStyle.normal
-            ),
+    var form = Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FormComponent(
+            title: "이메일을 입력해주세요",
+            hint: "email",
+            errorMessage: "이메일을 입력해주세요",
+            onChanged: (text) => email = text
           ),
-        ),
-        Container(
-          padding: EdgeInsets.fromLTRB(0, 0, 50, 0),
-          child: TextField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(),
-              labelText: '닉네임',
-            )
+          FormComponent(
+            title: "닉네임을 입력해주세요",
+            hint: "닉네임",
+            errorMessage: "닉네임을 입력해주세요",
+            onChanged: (text) => name = text
           ),
-        ),
-      ]
+        ]
+      )
     );
 
     return Center(
@@ -51,7 +53,7 @@ class _NameScreenState extends State<NameScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Expanded(child: nickName, flex: 2,),
+            Expanded(child: form, flex: 2,),
             Expanded(child: button, flex: 1,)
           ],
         ),
