@@ -1,20 +1,27 @@
+import 'dart:convert';
+
+import 'package:dream/common/vo/response/response_vo.dart';
 import 'package:dream/components/form_component.dart';
+import 'package:dream/data/dto/request/add_user_request.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NameScreen extends StatefulWidget {
-  NameScreen({super.key});
+class SignupScreen extends StatefulWidget {
+  SignupScreen({super.key});
 
   @override
-  State<NameScreen> createState() => _NameScreenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _NameScreenState extends State<NameScreen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String email = "";
   String name = "";
+
+  final String url = "http://localhost:8080/api/v1/members";
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +73,13 @@ class _NameScreenState extends State<NameScreen> {
   checkIsValidThenCreateUser(){
     print(name);
     print(email);
-    // createUser();
+
     if (_formKey.currentState?.validate() ?? false) {
-      // 유효성 검사 통과 시 여기에 추가 로직을 넣을 수 있습니다.
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('처리 중입니다.')),
       );
+
+      createUser();
     } else {
       String message = email.isEmpty ? "이메일을 입력해주세요" : "닉네임을 입력해주세요";
       ScaffoldMessenger.of(context).showSnackBar(
@@ -82,6 +90,16 @@ class _NameScreenState extends State<NameScreen> {
 
   createUser() async {
     // 계정 생성 api 호출
+    ResponseVO? response = await postMember();
+
+    if (response == null) {
+      // 통신 에러 발생
+      print("등록 실패");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('다시 시도해주세요.')),
+      );
+      return;
+    }
     int userId = 1;
 
     // 계정 Local 저장
@@ -91,5 +109,36 @@ class _NameScreenState extends State<NameScreen> {
     prefs.setString("name", name);
 
     // 화면 전환
+    Navigator.popAndPushNamed(
+        context,
+        "/home"
+    );
+  }
+
+  Future<ResponseVO?> postMember() async {
+    var body = jsonEncode(AddUserRequest(email, name).toJson());
+    var headers = {'Content-Type': 'application/json'};
+
+    print(Uri.parse(url));
+    print(body);
+
+    try {
+      final response = await http.post(
+          Uri.parse(url),
+          body: body,
+          headers: headers
+      );
+
+      print(response.statusCode);
+
+      if (response.statusCode >= 200 && response.statusCode < 300) {
+        var decode = utf8.decode(response.bodyBytes);
+        print("response : $decode");
+        return ResponseVO.fromJson(json.decode(decode));
+      }
+    } catch(e) {
+      print(e);
+    }
+    return null;
   }
 }
