@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dream/common/vo/response/response_vo.dart';
 import 'package:dream/components/form_component.dart';
 import 'package:dream/data/dto/request/add_user_request.dart';
+import 'package:dream/screens/first_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -56,17 +57,19 @@ class _SignupScreenState extends State<SignupScreen> {
       )
     );
 
-    return Center(
-      child: Container(
-        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Expanded(child: form, flex: 2,),
-            Expanded(child: button, flex: 1,)
-          ],
-        ),
-      )
+    return Scaffold(
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(child: form, flex: 2,),
+                Expanded(child: button, flex: 1,)
+              ],
+            ),
+          )
+        )
     );
   }
 
@@ -109,9 +112,9 @@ class _SignupScreenState extends State<SignupScreen> {
     prefs.setString("name", name);
 
     // 화면 전환
-    Navigator.popAndPushNamed(
+    Navigator.pushReplacement(
         context,
-        "/home"
+        MaterialPageRoute(builder: (context) => FirstPage())
     );
   }
 
