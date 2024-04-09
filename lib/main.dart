@@ -1,7 +1,10 @@
+import 'package:dream/constant/config/config.dart';
 import 'package:dream/screens/first_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Config.load();
   runApp(const MyApp());
 }
 
