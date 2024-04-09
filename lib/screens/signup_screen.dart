@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dream/common/vo/response/response_vo.dart';
 import 'package:dream/components/form_component.dart';
+import 'package:dream/constant/config/config.dart';
 import 'package:dream/data/dto/request/add_user_request.dart';
 import 'package:dream/screens/first_page.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String email = "";
   String name = "";
 
-  final String url = "http://localhost:8080/api/v1/members";
+  final String url = "${Config.apiUrl}/members";
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +75,6 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   checkIsValidThenCreateUser(){
-    print(name);
-    print(email);
-
     if (_formKey.currentState?.validate() ?? false) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('처리 중입니다.')),
@@ -103,7 +101,8 @@ class _SignupScreenState extends State<SignupScreen> {
       );
       return;
     }
-    int userId = 1;
+
+    var userId = response.data['memberId'];
 
     // 계정 Local 저장
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -121,9 +120,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Future<ResponseVO?> postMember() async {
     var body = jsonEncode(AddUserRequest(email, name).toJson());
     var headers = {'Content-Type': 'application/json'};
-
-    print(Uri.parse(url));
-    print(body);
 
     try {
       final response = await http.post(
